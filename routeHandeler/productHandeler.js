@@ -102,12 +102,12 @@ router.delete('/:id', async (req,res)=>{
     await Product .deleteOne({_id:req.params.id})
     .then(() => {
                 
-        res.status(500).json({
+        res.status(200).json({
             msg:" Product  was deleted succesfully"
         })
     })
     .catch(err => {
-        res.status(200).json({
+        res.status(500).json({
             error:"there was a serverside error" 
         })
         
