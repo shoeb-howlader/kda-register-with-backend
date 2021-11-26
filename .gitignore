@@ -2,7 +2,7 @@
 node_modules
 /dist
 logs
-
+/db_backup/kda-register.gzip
 # local env files
 .env.local
 .env.*.local

@@ -1,0 +1,1 @@
+mongorestore --db=kda-register --archive=./kda-register.gzip --gzip
