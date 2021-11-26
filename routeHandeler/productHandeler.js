@@ -60,12 +60,12 @@ router.post('/all', async (req,res)=>{
     await Product .insertMany(req.body, err=>{
         if(err){
     
-            res.status(200).json({
+            res.status(500).json({
                 error:"there was a serverside error"
             })
         }
         else{
-            res.status(500).json({
+            res.status(200).json({
                 msg:"Many Product  was inserted succesfully"
             })
         }
@@ -99,7 +99,7 @@ router.put('/:id', async (req,res)=>{
 )
 
 router.delete('/:id', async (req,res)=>{
-    await Product .deleteOne({_id:req.params.id})
+    await Product .deleteMany({_id:req.params.id})
     .then(() => {
                 
         res.status(200).json({
@@ -115,6 +115,25 @@ router.delete('/:id', async (req,res)=>{
     )
 
 })
+
+router.delete('/', async (req,res)=>{
+
+    console.log(req.body.ids)
+    await Product .deleteMany({_id:req.body.ids})
+    .then((data) => {
+                
+        res.status(200).json(data)
+    })
+    .catch(err => {
+        res.status(500).json({
+            error:"there was a serverside error" 
+        })
+        
+    }
+    )
+
+})
+
 
 
 module.exports=router;

@@ -1,6 +1,8 @@
 var express = require('express');
 var productRoute=require('../routeHandeler/productHandeler')
 var categoryRoute=require('../routeHandeler/categoryHandeler')
+var departmentRoute = require('../routeHandeler/departmentHandeler')
+var designationRoute=require('../routeHandeler/designationHandeler')
 var router = express.Router();
 
 /* GET home page. */
@@ -10,5 +12,7 @@ router.get('/', function(req, res, next) {
 
 router.use('/products', productRoute);
 router.use('/categories', categoryRoute);
+router.use('/departments', departmentRoute);
+router.use('/designations', designationRoute);
 
 module.exports = router;
