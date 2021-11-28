@@ -1,13 +1,13 @@
 //import winston, { format } from 'winston';
 //import 'winston-daily-rotate-file';
-
+/*
 var winston = require('winston');
 require('winston-daily-rotate-file');
 var {format} = require('winston');
 /**
  * Logger handles all logs in the application
  */
- module.export= logger = winston.createLogger({
+ /*module.export= logger = winston.createLogger({
   format: format.combine(format.timestamp(), format.simple()),
   colorize: true,
   transports: [
@@ -39,7 +39,7 @@ var {format} = require('winston');
 /**
  * morganLogger logs all http request in a dedicated file and on console
  */
-const morganLogger = winston.createLogger({
+/*const morganLogger = winston.createLogger({
   format: format.combine(format.simple()),
   transports: [
     new winston.transports.File({
@@ -68,7 +68,7 @@ module.export = logStream = {
    *
    * @param {any} message
    */
-  write(message) {
+  /*write(message) {
     morganLogger.info(message.toString());
   }
 };

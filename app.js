@@ -52,6 +52,35 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+/////// code here for creating log file 
+const winston = require('winston');
+// Logger configuration
+const logConfiguration = {
+  'transports': [
+      new winston.transports.File({
+          filename: 'logs/DB_backup.log'
+      })
+  ]
+};
+const winlogger = winston.createLogger(logConfiguration);
+//winlogger.info('Hello, Winston!');
+//winlogger.info('Hello, Winston!');
+
+/*const winston = require('winston');
+
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.json(),
+  defaultMeta: { service: 'user-service' },
+  transports: [
+    //
+    // - Write all logs with level `error` and below to `error.log`
+    // - Write all logs with level `info` and below to `combined.log`
+    //
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+  ],
+});*/
 
 
 //////BACKUP code here //////
@@ -77,7 +106,9 @@ const ARCHIVE_PATH = path.join(__dirname, 'db_backup', `${DB_NAME}.gzip`);
 // Note: 2nd expression only contains 5 fields, since seconds is not necessary
 
 // Scheduling the backup every 5 seconds (using node-cron)
-cron.schedule('0 0 * * *', () => backupMongoDB());
+//daily night 0 0 * * *
+//this will backup every thursday 59 23 * * 4
+cron.schedule('*/5 * * * * *', () => backupMongoDB());
 
 function backupMongoDB() {
   const child = spawn('mongodump', [
@@ -98,7 +129,12 @@ function backupMongoDB() {
   child.on('exit', (code, signal) => {
     if (code) console.log('Process exit with code:', code);
     else if (signal) console.log('Process killed with signal:', signal);
-    else console.log('Backup is successfull ✅');
+    else {console.log('Backup is successfull ✅');
+    var today = new Date();
+    var date =today.getDate()+'-'+ (today.getMonth()+1)+'-'+today.getFullYear();
+    winlogger.info('Backup is successfull ✅--  date:'+date);
+  }
+
   });
 }
 
