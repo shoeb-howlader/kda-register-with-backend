@@ -132,7 +132,8 @@ function backupMongoDB() {
     else {console.log('Backup is successfull ✅');
     var today = new Date();
     var date =today.getDate()+'-'+ (today.getMonth()+1)+'-'+today.getFullYear();
-    winlogger.info('Backup is successfull ✅--  date:'+date);
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    winlogger.info('Backup is successfull ✅--  date: '+date+'  time: '+time);
   }
 
   });
