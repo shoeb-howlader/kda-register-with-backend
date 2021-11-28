@@ -5,6 +5,7 @@ const productSchema=mongoose.Schema(
        
         category: String,
         CurrentUser: String,
+        supplyDescription:String,
         productDescription: String,
         status: String,
         supplier: String,
