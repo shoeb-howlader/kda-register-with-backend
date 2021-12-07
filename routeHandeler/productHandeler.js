@@ -1,12 +1,13 @@
 const express=require('express');
 const mongoose =require('mongoose')
 const router =express.Router();
+const checkLogin=require('../middleware/checkLogin')
 const productSchema = require('../schemas/productSchema')
 const Product = new mongoose.model('Product', productSchema)
 
 
 //get all Products
-router.get('/', async (req,res)=>{
+router.get('/',checkLogin, async (req,res)=>{
     await Product .find({},(err,data)=>{
     if(err){
 
