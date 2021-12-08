@@ -2,12 +2,13 @@ const express=require('express');
 const mongoose =require('mongoose');
 const bcrypt =require('bcrypt');
 const jwt =require('jsonwebtoken');
+const checkLogin=require('../middleware/checkLogin')
 const router =express.Router();
 const userSchema = require('../schemas/userSchema')
 const User = new mongoose.model('User', userSchema)
 
 //signup
-router.post('/signup', async (req,res)=>{
+router.post('/signup',checkLogin, async (req,res)=>{
 try{
         const hashedPassword= await bcrypt.hash(req.body.password,10,)
         const newUser  = new User ({
@@ -35,9 +36,10 @@ catch(err){
 ///login
 router.post('/login', async (req,res)=>{
    try{
-    const user= await User.find({username:req.body.username})
+    const user= await User.find({email:req.body.email})
     if(user&& user.length>0)
     {
+        
             const isValidPassword=await bcrypt.compare(req.body.password,user[0].password)
             if(isValidPassword){
                     //generate token
@@ -48,7 +50,8 @@ router.post('/login', async (req,res)=>{
                         expiresIn:'7d'
                     })
                     res.status(200).json({
-                        'access_toekn':token,
+                        'token':token,
+                        'user':{username:user[0].username},
                         'message':'Login Succesful'
                     })
 

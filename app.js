@@ -9,6 +9,7 @@ dotenv.config();
 var indexRouter = require('./routes/index');
 var apiRouter=require('./api')
 const database = require('./config/database');
+//const checkLogin=require('./middleware/checkLogin')
 var app = express();
 
 // view engine setup
@@ -23,6 +24,7 @@ app.use(cookieParser());
 
 
 database();
+//app.use(checkLogin);
 app.use('/', indexRouter);
 app.use('/api', apiRouter);
 
