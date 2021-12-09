@@ -8,7 +8,7 @@ const userSchema = require('../schemas/userSchema')
 const User = new mongoose.model('User', userSchema)
 
 //signup
-router.post('/signup',checkLogin, async (req,res)=>{
+router.post('/signup', async (req,res)=>{
 try{
         const hashedPassword= await bcrypt.hash(req.body.password,10,)
         const newUser  = new User ({
